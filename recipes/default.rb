@@ -119,7 +119,11 @@ template "#{node['rabbitmq']['config_root']}/rabbitmq-env.conf" do
 end
 
 template "#{node['rabbitmq']['config_root']}/rabbitmq.config" do
-  source "rabbitmq.config.erb"
+  if cb = node['rabbitmq']['config_cookbook']
+    cookbook cb
+  end
+
+  source node['rabbitmq']['config_source']
   owner "root"
   group "root"
   mode 00644
